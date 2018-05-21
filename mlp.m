@@ -4,16 +4,10 @@
 %                                2018                                    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-close all;
-clear;
-clc;
-
-function [W,Y,Er]= pmc(net,x,d,lr,mr,mimer,maxit)
+function [W,Y,Er,Time]= mlp(net,x,d,lr,miner,maxit)
     %% Dados
-
+    tic
     X = x;                    %entradas
- %   X = horzcat(ones(size(X,1),1),X);   %adiciona bias às entradas
     D = d;                    %alvos
 
 
@@ -25,12 +19,10 @@ function [W,Y,Er]= pmc(net,x,d,lr,mr,mimer,maxit)
     NumIn = size(X,2);              %Número de Entradas 
     [W,I,Y] = initNet(Net,NumIn);   %Inicia os parãmetros da rede
     PrvW = W;                       %pesos da iteração anterior
-    LrnRte = lr;                   %Taxa de aprendizagem
-    MomRte = mr;                     %Taxa de Momentum
-    Momentum = 0;                  %Momentum
+    LrnRte = lr;                    %Taxa de aprendizagem
     count = 0;                      %Contador de épocas
     MaxCount = maxit;               %Número máximo de épocas
-    minErr = 1;                 %erro mínimo;
+    minErr = miner;                 %erro mínimo;
     EM = inf;                       %erro 
     PrvError = 1;                   %erro anterior
     CurError = 0;                   %erro atual
@@ -39,7 +31,6 @@ function [W,Y,Er]= pmc(net,x,d,lr,mr,mimer,maxit)
 
     while ((abs(EM - PrvError) > minErr ) && (count < MaxCount)) %Enquanto a variação do erro for maior que o limite
         PrvError = CalcError(Net,X,D,W);
-        PrvW = W;    
         for k = 1:NumEx %para cada exemplo
             %FORWARD 
             [I,Y] = Forward(Net,X(k,:),W);
@@ -53,8 +44,7 @@ function [W,Y,Er]= pmc(net,x,d,lr,mr,mimer,maxit)
             %atualização dos pesos das camadas de saída
 
             for j=1:Net(layers)
-                Momentum = MomRte *(W{layers}(:,j) - PrvW{layers}(:,j));
-                W{layers}(:,j) = W{layers}(:,j) + Momentum + LrnRte*Delta{layers}(j).*Y{layers-1};
+                W{layers}(:,j) = W{layers}(:,j) + LrnRte*Delta{layers}(j).*Y{layers-1};
             end
 
             %Cálculo do Delta das outras camadas 
@@ -63,11 +53,10 @@ function [W,Y,Er]= pmc(net,x,d,lr,mr,mimer,maxit)
                     Delta{n}(j,1) = -(W{n+1}(j,:) * Delta{n+1}).* (derivative(I{n}(j)'));
                 end
                 for j=1:Net(n)
-                    Momentum = MomRte *(W{n}(:,j) - PrvW{n}(:,j));
                     if n>1 %se não for a camada de entrada
-                        W{n}(:,j) = W{n}(:,j) + Momentum + LrnRte*Delta{n}(j).*Y{n-1};
+                        W{n}(:,j) = W{n}(:,j) + LrnRte*Delta{n}(j).*Y{n-1};
                     else %se for a camada de entrada
-                        W{n}(:,j) = W{n}(:,j) + Momentum + LrnRte*Delta{n}(j).*X(k,:)';
+                        W{n}(:,j) = W{n}(:,j) + LrnRte*Delta{n}(j).*X(k,:)';
                     end
                 end
             end
@@ -77,7 +66,7 @@ function [W,Y,Er]= pmc(net,x,d,lr,mr,mimer,maxit)
         count = count+1;
         Er(count) = CurError;
     end
-    plot(Er);
+    Time = toc;
 end
 %% Funções
 
