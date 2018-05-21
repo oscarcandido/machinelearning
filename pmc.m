@@ -9,6 +9,7 @@ close all;
 clear;
 clc;
 
+
 %% Dados
 
 Data = csvread('livro59.csv');      %Dados dos exemplos
