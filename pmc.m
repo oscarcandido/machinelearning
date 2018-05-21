@@ -35,7 +35,6 @@ EM = inf;                       %erro
 PrvError = 1;                   %erro anterior
 CurError = 0;                   %erro atual
 Delta = cell(1,layers);         %Delta de Cada neorônio
-
 %% Treinamento
 
 while ((abs(EM - PrvError) > minErr ) && (count < MaxCount)) %Enquanto a variação do erro for maior que o limite

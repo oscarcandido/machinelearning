@@ -7,3 +7,4 @@ Age =hospital.Age;
 Press = hospital.BloodPressure;
 
 %% Gráfico
+teste = 0;
