@@ -27,8 +27,6 @@ NumIn = size(X,2);              %Número de Entradas
 [W,I,Y] = initNet(Net,NumIn);   %Inicia os parãmetros da rede
 PrvW = W;                       %pesos da iteração anterior
 LrnRte = 0.1;                   %Taxa de aprendizagem
-MomRte = 0;                     %Taxa de Momentum
-Momentum = 0;                   %Momentum
 count = 0;                      %Contador de épocas
 MaxCount = 1000;                %Número máximo de épocas
 minErr = 10e-6;                 %erro mínimo;
@@ -54,9 +52,7 @@ while ((abs(EM - PrvError) > minErr ) && (count < MaxCount)) %Enquanto a variaçã
         %atualização dos pesos das camadas de saída
         
         for j=1:Net(layers)
-            DeltaW = (W{layers}(:,j) - PrvW{layers}(:,j));
-            Momentum = MomRte * DeltaW;
-            W{layers}(:,j) = W{layers}(:,j) + Momentum + LrnRte*Delta{layers}(j).*Y{layers-1};
+            W{layers}(:,j) = W{layers}(:,j) + LrnRte*Delta{layers}(j).*Y{layers-1};
         end
         
         %Cálculo do Delta das outras camadas 
@@ -65,12 +61,10 @@ while ((abs(EM - PrvError) > minErr ) && (count < MaxCount)) %Enquanto a variaçã
                 Delta{n}(j,1) = -(W{n+1}(j,:) * Delta{n+1}).* (derivative(I{n}(j)'));
             end
             for j=1:Net(n)
-                DeltaW = (W{n}(:,j) - PrvW{n}(:,j));
-                Momentum = MomRte * DeltaW;
                 if n>1 %se não for a camada de entrada
-                    W{n}(:,j) = W{n}(:,j) + Momentum + LrnRte*Delta{n}(j).*Y{n-1};
+                    W{n}(:,j) = W{n}(:,j)  + LrnRte*Delta{n}(j).*Y{n-1};
                 else %se for a camada de entrada
-                    W{n}(:,j) = W{n}(:,j) + Momentum + LrnRte*Delta{n}(j).*X(k,:)';
+                    W{n}(:,j) = W{n}(:,j)  + LrnRte*Delta{n}(j).*X(k,:)';
                 end
             end
         end
