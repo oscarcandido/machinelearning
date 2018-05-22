@@ -10,7 +10,7 @@
 function c = classifica(Net,X,W,Func)
     
    c = Forward(Net,X,W,Func); 
-   c = c{2};
+   c = c{size(Net,2)};
 end
 
 % FORWARD DA REDE
