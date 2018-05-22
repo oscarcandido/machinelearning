@@ -10,7 +10,7 @@
 function c = classifica(Net,X,W,Func)
     
    c = Forward(Net,X,W,Func); 
-
+   c = c{2};
 end
 
 % FORWARD DA REDE
@@ -21,7 +21,7 @@ function [Y] = Forward(Net,X,W,fn)
     Layers = size(W,2);
     for i=1:Net(1)                  %para cada neoronio da primeira camada
         I{1}(i) = X * W{1}(:,i);
-        Y{1} = active(I{1}); 
+        Y{1} = active(I{1},fn); 
     end
     for i=2:Layers                         %para cada camada i
         Y{i-1} = vertcat(1,Y{i-1});        %acrescenta o Bias

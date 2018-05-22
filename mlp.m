@@ -4,7 +4,7 @@
 %                                2018                                    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [W,Y,Er,Time]= mlp(net,x,d,lr,miner,maxit)
+function [W,Er,Time]= mlp(net,x,d,lr,miner,maxit)
     %% Dados
     tic
     X = x;                    %entradas
