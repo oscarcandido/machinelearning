@@ -118,15 +118,17 @@ function [I,Y] = Forward(Net,X,W)
         I{1}(i) = X * W{1}(:,i);
         Y{1} = active(I{1}); 
     end
-    for i=2:Layers                       %para cada camada i
-        Y{i-1} = vertcat(1,Y{i-1});      %acrescenta o Bias
-        for j = 1:Net(i)                 %para cada neorônio j na camada i
-            I{i}(j) = Y{i-1}' * W{i}(:,j); 
+    for i=2:Layers                         %para cada camada i
+        Y{i-1} = vertcat(1,Y{i-1});        %acrescenta o Bias
+        for j = 1:Net(i)                   %para cada neorônio j na camada i
+            I{i}(j) = Y{i-1}' * W{i}(:,j); %calcula o input do neorônio j 
         end
-        Y{i} = active(I{i});
+        Y{i} = active(I{i});             
     end
 
 end
+
+% CÁLCULA O ERRO QUADRÁTICO MÉDIO
 
 function em = CalcError(Net,X,D,W)
     HistError = zeros(size(X,1),1);     %histórico de erros
