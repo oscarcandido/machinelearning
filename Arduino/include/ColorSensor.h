@@ -8,6 +8,7 @@
     S0,S1 - Entrada de Seleção da escala da frequência de saída
     S2,S3 - Entrada de seleção do tipo de foto diodo
     Out   - Saída da Frequência
+    OE    - Enable (Ativo LOW)
 
     OPÇÕES SELECIONÁVEIS
 
@@ -45,6 +46,7 @@ class ColorSensor
         ColorSensor();
         ColorSensor(unsigned int S0,unsigned int S1,unsigned int S2,unsigned int S3,unsigned int Out);
         ColorSensor(unsigned int S0,unsigned int S1,unsigned int S2,unsigned int S3,unsigned int Out,unsigned int Freq);
+        ColorSensor(unsigned int OE,unsigned int S0,unsigned int S1,unsigned int S2,unsigned int S3,unsigned int Out,unsigned int Freq);
 
         /*** DESTRUTORES ***/
 
@@ -52,7 +54,11 @@ class ColorSensor
 
         /*** MÉTODOS ***/
 
+        void SetEnable(bool Val);//Habilita ou desabilita Sensor
+        bool GetEnable();//Retorna status do sensor, habilitado = true desabilitado = false;
         void SetOutFreq(unsigned int val);// Configura escala de frequência de saída
+        unsigned int GetpinOE() { return pinOE; }//Retorna pino configurado como OE
+        void SetPinOE(unsigned int val);//Configura pino OE
         unsigned int GetpinS0() { return pinS0; }//Retorna pino configurado como S0
         void SetpinS0(unsigned int val);//Configura pino S0
         unsigned int GetpinS1() { return pinS1; }//Retorna pino configurado como S1
@@ -73,6 +79,7 @@ class ColorSensor
         unsigned int pinS2;//Armazena número do pino S2
         unsigned int pinS3;//Armazena número do pino S3
         unsigned int pinOut;//Armazena número do pino de Saída
+        unsigned int pinOE;//Armazena numero do pino de habilitacao
         unsigned int Red;//Armazena leitura com filtro vermelho ativado
         unsigned int Green;//Armazena leitura com filtro Verde ativado
         unsigned int Blue;//Armazena leitura com filtro Azul ativado

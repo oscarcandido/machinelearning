@@ -27,6 +27,17 @@ ColorSensor::ColorSensor(unsigned int S0,unsigned int S1,unsigned int S2,unsigne
 
 }
 
+ColorSensor::ColorSensor(unsigned int OE,unsigned int S0,unsigned int S1,unsigned int S2,unsigned int S3,unsigned int Out,unsigned int Freq)
+{
+    SetPinOE(OE);
+    SetpinS0(S0);
+    SetpinS1(S1);
+    SetpinS2(S2);
+    SetpinS3(S3);
+    SetpinOut(Out);
+    SetOutFreq(Freq);
+}
+
 /*** DESTRUTOR ***/
 
 ColorSensor::~ColorSensor()
@@ -35,6 +46,33 @@ ColorSensor::~ColorSensor()
 }
 /*** MÉTODOS ***/
 
+void ColorSensor::SetEnable(bool val)
+{
+    if (val)
+    {
+        digitalWrite(pinOE,LOW);
+    }
+    else
+    {
+        digitalWrite(pinOE,HIGH);
+    }
+}
+bool ColorSensor::GetEnable()
+{
+    if (digitalRead(pinOE)== LOW)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+void ColorSensor::SetPinOE(unsigned int val)//Configura pino OE
+{
+    pinOE = val;
+    pinMode(pinOE,OUTPUT);
+}
 void ColorSensor::SetpinS0(unsigned int val)//Configura pino S0
 {
     pinS0 = val;
