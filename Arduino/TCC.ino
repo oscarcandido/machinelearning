@@ -12,6 +12,7 @@ LARANJA     S0
 */
 
 #include <Arduino.h>
+#include <SPI.h>
 #include <SD.h>
 #include "ColorSensor.h"
 
@@ -23,13 +24,19 @@ LARANJA     S0
 #define S2 52
 #define S3 53
 #define Out 48
-#define Freq 20
+#define Freq 100
 #define OE 49
 
+//Pino motor
+
+#define Motor 30
+
+//Pino sensor presença
+#define Presenca 20
+
 //Variaveis globais
-
-
-
+File Dados;//Arquivo de dados
+const int chipSelect = 4;
 //estrutura de cores
 
 struct RGB{
@@ -57,6 +64,14 @@ void setup()
 {
 	Serial.begin(9600);
 	Sensor.SetEnable(true);
+	pinMode(Motor,OUTPUT);
+	pinMode(Presenca,INPUT);
+	if (SD.begin(chipSelect)){
+        Serial.println("CartãoSD pronto para uso");
+    } else {
+        Serial.println("Falha ao inicia cartão SD");
+        return;
+    };
 }
 
 void loop()
@@ -72,7 +87,15 @@ void loop()
 	Serial.print("Azul = ");
     int Blue = Sensor.GetBlue();
     Serial.println(Blue);
-
-	delay(2000);              // wait for a second
+    Dados = SD.open("log.csv",FILE_WRITE);
+    if (Dados){
+        Dados.print(Red);
+        Dados.print(";");
+        Dados.print(Green);
+        Dados.print(";");
+        Dados.println(Blue);
+    }
+    Dados.close();
+	delay(500);              // wait for a second
 
 }

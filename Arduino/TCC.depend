@@ -186,3 +186,15 @@
 	<Arduino.h>
 	"ColorSensor.h"
 
+1536084560 source:e:\oscar\tcc\arduino\src\colorsensor.cpp
+	<Arduino.h>
+	"ColorSensor.h"
+
+1536084560 e:\oscar\tcc\arduino\include\colorsensor.h
+
+1536087462 source:e:\oscar\tcc\arduino\tcc.ino
+	<Arduino.h>
+	<SPI.h>
+	<SD.h>
+	"ColorSensor.h"
+
