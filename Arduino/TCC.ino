@@ -15,6 +15,7 @@ LARANJA     S0
 #include <SPI.h>
 #include <SD.h>
 #include "ColorSensor.h"
+#include "Motor.h"
 
 
 //Pinos do sensor de cor
@@ -29,12 +30,14 @@ LARANJA     S0
 
 //Pino motor
 
-#define Motor 30
+#define PinMotor 30
 
 //Pino sensor presença
-#define Presenca 20
+
+#define PinPresenca 20
 
 //Variaveis globais
+
 File Dados;//Arquivo de dados
 const int chipSelect = 4;
 //estrutura de cores
@@ -48,6 +51,9 @@ struct RGB{
 //Sensor de cor
 ColorSensor Sensor(OE,S0,S1,S2,S3,Out,Freq);
 
+//Motor
+Motor Motor(PinMotor);
+
 RGB ReadColor()
 {
     RGB Color = {0,0,0};
@@ -60,12 +66,28 @@ RGB ReadColor()
     return Color;
 
 }
+//captura dados da peça e grava no cartão SD
+void GetData()
+{
+
+}
 void setup()
 {
 	Serial.begin(9600);
+	//Configura Sensor de cor
+
 	Sensor.SetEnable(true);
-	pinMode(Motor,OUTPUT);
-	pinMode(Presenca,INPUT);
+
+	//Configura motor
+
+	Motor.Desliga();
+    Motor.SetPWM(255);
+
+    //Configura sensor de presença
+
+	attachInterrupt(PinPresenca,GetData,FALLING);
+
+	//Configura cartão SD
 	if (SD.begin(chipSelect)){
         Serial.println("CartãoSD pronto para uso");
     } else {

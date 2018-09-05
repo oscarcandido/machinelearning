@@ -674,7 +674,9 @@
 			<Option link="1" />
 		</Unit>
 		<Unit filename="include/ColorSensor.h" />
+		<Unit filename="include/Motor.h" />
 		<Unit filename="src/ColorSensor.cpp" />
+		<Unit filename="src/Motor.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

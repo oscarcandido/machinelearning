@@ -192,9 +192,16 @@
 
 1536084560 e:\oscar\tcc\arduino\include\colorsensor.h
 
-1536087462 source:e:\oscar\tcc\arduino\tcc.ino
+1536179864 source:e:\oscar\tcc\arduino\tcc.ino
 	<Arduino.h>
 	<SPI.h>
 	<SD.h>
 	"ColorSensor.h"
+	"Motor.h"
+
+1536179642 source:e:\oscar\tcc\arduino\src\motor.cpp
+	<Arduino.h>
+	"Motor.h"
+
+1536179864 e:\oscar\tcc\arduino\include\motor.h
 
