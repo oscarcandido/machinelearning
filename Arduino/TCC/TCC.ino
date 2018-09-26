@@ -25,14 +25,14 @@ LARANJA     S0
 #define S2 52
 #define S3 53
 #define Out 48
-#define Freq 2
+#define Freq  20
 #define OE 49
 
 //Pino motor
 
 #define PinMotor 30
 
-//Pino sensor presença
+//Pino sensor presenï¿½a
 
 #define PinPresenca 2
 
@@ -49,7 +49,7 @@ struct RGB{
 };
 
 //Sensor de cor
-ColorSensor Sensor(OE,S0,S1,S2,S3,Out,2);
+ColorSensor Sensor(OE,S0,S1,S2,S3,Out,Freq);
 
 //Motor
 Motor Motor(PinMotor);
@@ -66,28 +66,30 @@ RGB ReadColor()
     return Color;
 
 }
-//captura dados da peça e grava no cartão SD
+//captura dados da peï¿½a e grava no cartï¿½o SD
 void GetData()
 {
     Motor.Desliga();
+    Serial.println("LENDO");
+    delay(2000);
 	Serial.print("Vermelho = ");
-    int Red = Sensor.GetRed();
-    Serial.print(Red);
+ //   float Red = Sensor.GetRed();
+//    Serial.print(Red);
 	Serial.print("\t");
 	Serial.print("Verde = ");
     int Green = Sensor.GetGreen();
     Serial.print(Green);
 	Serial.print("\t");
 	Serial.print("Azul = ");
-    int Blue = Sensor.GetBlue();
-    Serial.println(Blue);
+ //   int Blue = Sensor.GetBlue();
+ //   Serial.println(Blue);
     Dados = SD.open("log.csv",FILE_WRITE);
     if (Dados){
-        Dados.print(Red);
+//        Dados.print(Red);
         Dados.print(";");
         Dados.print(Green);
         Dados.print(";");
-        Dados.println(Blue);
+ //       Dados.println(Blue);
     }
     Dados.close();
 }
@@ -98,28 +100,28 @@ void setup()
 
 	Sensor.SetEnable(true);
 
-    Sensor.SetOutFreq(2);
 	//Configura motor
 
 	Motor.Desliga();
     Motor.SetPWM(255);
 
-    //Configura sensor de presença
+    //Configura sensor de presenï¿½a
 
 	attachInterrupt(digitalPinToInterrupt(PinPresenca),GetData,RISING);
 
-	//Configura cartão SD
+	//Configura cartï¿½o SD
 	if (SD.begin(chipSelect)){
-        Serial.println("CartãoSD pronto para uso");
+        Serial.println("Cartï¿½oSD pronto para uso");
     } else {
-        Serial.println("Falha ao inicia cartão SD");
+        Serial.println("Falha ao inicia cartï¿½o SD");
         return;
     };
 }
 
 void loop()
 {
-
+    Serial.println("Aguardando");
+    Motor.Liga();
 	delay(500);              // wait for a second
 
 }

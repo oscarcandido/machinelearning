@@ -1,6 +1,6 @@
 close all;
 %% Dados de treinamento
-Data = csvread('livro1.csv');%Dados dos exemplos
+Data = csvread('LOG.csv');%Dados dos exemplos
 X = Data(:,1:3);%entradas
 Y = Data(:,4);%alvo
 nEx  = size(X,1); %número de exemplos

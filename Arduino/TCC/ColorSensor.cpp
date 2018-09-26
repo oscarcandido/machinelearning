@@ -101,26 +101,22 @@ void ColorSensor::SetpinOut(unsigned int val)//Configura pino de Saída
 void ColorSensor::SetOutFreq(unsigned int val)// Configura escala de frequência de saída
 {
     digitalWrite(pinS0,LOW);
-    digitalWrite(pinS1,HIGH);
-
-/*    switch(val)
+    digitalWrite(pinS1,LOW);
+    switch(val)
     {
         case 2:
             digitalWrite(pinS0,LOW);
             digitalWrite(pinS1,HIGH);
-            Serial.println("2");
             break;
         case 20:
             digitalWrite(pinS0,HIGH);
             digitalWrite(pinS1,LOW);
-            Serial.println("20");
             break;
         case 100:
             digitalWrite(pinS0,HIGH);
             digitalWrite(pinS1,HIGH);
-            Serial.println("100");
             break;
-    }*/
+    }
 }
 
 /********************************************
