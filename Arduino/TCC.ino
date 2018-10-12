@@ -30,16 +30,17 @@ LARANJA     S0
 
 //Pino motor
 
-#define PinMotor 30
+#define PinMotor 44
 
 //Pino sensor presença
 
-#define PinPresenca 2
+#define PinPresenca 3
 
 //Variaveis globais
 
 File Dados;//Arquivo de dados
 const int chipSelect = 4;
+byte Flag = 0;
 //estrutura de cores
 
 struct RGB{
@@ -81,13 +82,23 @@ void GetData()
 	Serial.print("Azul = ");
     int Blue = Sensor.GetBlue();
     Serial.println(Blue);
+    delay(50);
+    int Tini = millis();
+    while ((digitalRead(PinPresenca) == HIGH)){
+        Motor.Liga();
+        Serial.println("MOVENDO");
+    }
+    int Tfim = millis();
+    int DeltaT = Tfim -Tini;
     Dados = SD.open("log.csv",FILE_WRITE);
     if (Dados){
         Dados.print(Red);
         Dados.print(";");
         Dados.print(Green);
         Dados.print(";");
-        Dados.println(Blue);
+        Dados.print(Blue);
+        Dados.print(";");
+        Dados.println(DeltaT);
     }
     Dados.close();
 }
@@ -106,8 +117,8 @@ void setup()
 
     //Configura sensor de presença
 
-	attachInterrupt(digitalPinToInterrupt(PinPresenca),GetData,RISING);
-
+//	attachInterrupt(digitalPinToInterrupt(PinPresenca),GetData,RISING);
+    pinMode(PinPresenca,INPUT);
 	//Configura cartão SD
 	if (SD.begin(chipSelect)){
         Serial.println("CartãoSD pronto para uso");
@@ -120,6 +131,12 @@ void setup()
 void loop()
 {
 
-	delay(500);              // wait for a second
-
+    while ((digitalRead(PinPresenca) == LOW)){
+        Motor.Liga();
+        Serial.println("Aguardando");
+    }
+    if (digitalRead(PinPresenca == HIGH)){
+        Serial.println("Dados");
+        GetData();
+    }
 }
