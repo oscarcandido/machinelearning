@@ -4,6 +4,21 @@
 %                                2018                                    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%parâmentros
+
+%net   - vetor com configuração da rede 
+%x     - matriz com características das amostras
+%d     - matriz com respostas desejadas da rede
+%lr    - Taxa de aprendizagem
+%miner - erro mínimo
+%maxit - número máximo de iterações
+
+%retornos da função
+
+%W    - Célula com os pesos para cada neurônio na rede
+%Er   - Erro mínimo encontrado
+%Time - tempo de execução 
+
 function [W,Er,Time]= mlp(net,x,d,lr,miner,maxit)
     %% Dados
     tic

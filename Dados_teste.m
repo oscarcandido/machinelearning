@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       PERCEPTRON MULTICAMADAS                          %
-%                           VALIDAÇÃO DA REDE                            %
+%                 TESTE COM DADOS DE CORES COLETADOS                     %
 %                   Oscar Felício Candido Longuinho                      %
 %                                2018                                    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
