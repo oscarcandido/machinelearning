@@ -23,9 +23,6 @@ object FrmClassifica: TFrmClassifica
     Width = 1041
     Height = 19
     Panels = <>
-    ExplicitLeft = 368
-    ExplicitTop = 192
-    ExplicitWidth = 0
   end
   object Panel1: TPanel
     Left = 0
@@ -37,8 +34,6 @@ object FrmClassifica: TFrmClassifica
     Color = 12615680
     ParentBackground = False
     TabOrder = 1
-    ExplicitTop = -6
-    ExplicitHeight = 350
     object gpbDados: TGroupBox
       AlignWithMargins = True
       Left = 3
@@ -154,6 +149,35 @@ object FrmClassifica: TFrmClassifica
       TabOrder = 2
       Text = 'Edit1'
     end
+    object ComboBox1: TComboBox
+      Left = 24
+      Top = 200
+      Width = 145
+      Height = 21
+      ItemIndex = 0
+      TabOrder = 3
+      Text = 'COM0'
+      Items.Strings = (
+        'COM0'
+        'COM1'
+        'COM2'
+        'COM3'
+        'COM4'
+        'COM5'
+        'COM6'
+        'COM7'
+        'COM8'
+        'COM9')
+    end
+    object BitBtn1: TBitBtn
+      Left = 24
+      Top = 227
+      Width = 75
+      Height = 25
+      Caption = 'Conectar'
+      TabOrder = 4
+      OnClick = BitBtn1Click
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -166,9 +190,6 @@ object FrmClassifica: TFrmClassifica
     Color = 12615680
     ParentBackground = False
     TabOrder = 2
-    ExplicitLeft = 504
-    ExplicitTop = 72
-    ExplicitWidth = 185
   end
   object Panel3: TPanel
     Left = 209
@@ -177,10 +198,6 @@ object FrmClassifica: TFrmClassifica
     Height = 507
     Align = alClient
     TabOrder = 3
-    ExplicitLeft = 328
-    ExplicitTop = 200
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     object Panel4: TPanel
       Left = 1
       Top = 1
@@ -191,10 +208,6 @@ object FrmClassifica: TFrmClassifica
       Color = clWhite
       ParentBackground = False
       TabOrder = 0
-      ExplicitLeft = 56
-      ExplicitTop = 0
-      ExplicitWidth = 753
-      ExplicitHeight = 449
       object Image1: TImage
         AlignWithMargins = True
         Left = 3
@@ -223,9 +236,6 @@ object FrmClassifica: TFrmClassifica
         ParentBackground = False
         ParentFont = False
         TabOrder = 0
-        ExplicitLeft = -39
-        ExplicitTop = -2
-        ExplicitWidth = 623
       end
     end
     object Panel6: TPanel
@@ -236,20 +246,12 @@ object FrmClassifica: TFrmClassifica
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitLeft = 64
-      ExplicitTop = 280
-      ExplicitWidth = 753
-      object Image2: TImage
-        AlignWithMargins = True
-        Left = 3
-        Top = 44
-        Width = 824
-        Height = 130
-        Align = alClient
-        ExplicitLeft = 256
-        ExplicitTop = 216
-        ExplicitWidth = 105
-        ExplicitHeight = 105
+      object Label1: TLabel
+        Left = 352
+        Top = 112
+        Width = 31
+        Height = 13
+        Caption = 'Label1'
       end
       object Panel7: TPanel
         Left = 0
@@ -268,14 +270,29 @@ object FrmClassifica: TFrmClassifica
         ParentBackground = False
         ParentFont = False
         TabOrder = 0
-        ExplicitLeft = 1
-        ExplicitTop = 1
-        ExplicitWidth = 751
       end
     end
   end
   object OpenDialog1: TOpenDialog
     Left = 336
     Top = 184
+  end
+  object ApdComPort1: TApdComPort
+    Baud = 9600
+    TraceName = 'APRO.TRC'
+    LogName = 'APRO.LOG'
+    Left = 56
+    Top = 297
+  end
+  object ApdDataPacket1: TApdDataPacket
+    Enabled = True
+    EndCond = [ecString]
+    StartString = '['
+    EndString = ']'
+    ComPort = ApdComPort1
+    PacketSize = 0
+    OnStringPacket = ApdDataPacket1StringPacket
+    Left = 56
+    Top = 360
   end
 end

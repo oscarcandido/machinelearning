@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls,IniFiles,Math,
-  Vcl.ExtCtrls,jpeg;
+  Vcl.ExtCtrls,jpeg, AdPacket, OoMisc, AdPort;
 
 type
   TFrmClassifica = class(TForm)
@@ -26,16 +26,23 @@ type
     Panel5: TPanel;
     Image1: TImage;
     Panel6: TPanel;
-    Image2: TImage;
     Panel7: TPanel;
+    ApdComPort1: TApdComPort;
+    ApdDataPacket1: TApdDataPacket;
+    ComboBox1: TComboBox;
+    BitBtn1: TBitBtn;
+    Label1: TLabel;
     procedure ImportaRede(Arquivo:TiniFile);
-    function Classifica(Amostra:String):Integer;
+    function Classifica(Amostra:tarray<real>):Integer;
     function StrArrayToFloatArray(AArray:Tarray<string>):Tarray<Real>;
     function MultiplicaArray(Array1:Tarray<real>;Array2:Tarray<real>):Real;
     function LogSig(x:Real):Real;
+    function Normaliza(Dados:Tarray<real>;Media:Real;Desvio:Real):Tarray<real>;
     procedure BitBtn2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure ApdDataPacket1StringPacket(Sender: TObject; Data: AnsiString);
   private
     { Private declarations }
   public
@@ -49,15 +56,39 @@ var
   NumCamadas:Integer;             //Número de Camadas
   NivelAtivacao : real;           //Nivel d eajuste da saída, acima do valor é considerado ativado
   Pesos: array of Tarray<string>; //Pesos sináptcos dos neurônios
+  Classe : Integer;               //Classa identificada pela rede
+  MediaDados :Real;               //Média dos dados utilizados no treinamento da rede
+  DesvioPadrao: Real;             //Desvio padrão dos dados utilizados no treinamento da rede
 implementation
 
 {$R *.dfm}
 
-procedure TFrmClassifica.BitBtn2Click(Sender: TObject);
+procedure TFrmClassifica.ApdDataPacket1StringPacket(Sender: TObject;
+  Data: AnsiString);
 var
-  Classe :Integer;
+  AmostraStr:Tarray<string>;
+  DataStr :String;
+  Amostra : Tarray<real>;
 begin
-  Classe := Classifica(Edit1.Text);
+  DataStr := Data;
+  DataStr := DataStr.Replace('[','');
+  DataStr := DataStr.Replace(']','');
+  DataStr := '1;' + DataStr;
+  AmostraStr := DataStr.Split([';']);
+  Amostra := StrArrayToFloatArray(AmostraStr);
+  Amostra := Normaliza(Amostra,MediaDados,DesvioPadrao);
+  Classe  := Classifica(Amostra);
+end;
+
+procedure TFrmClassifica.BitBtn1Click(Sender: TObject);
+begin
+  ApdComPort1.ComNumber := ComboBox1.ItemIndex;
+  ApdComPort1.Open := True;
+end;
+
+procedure TFrmClassifica.BitBtn2Click(Sender: TObject);
+begin
+//  Classe := Classifica(Edit1.Text);
   try
     Image1.Picture.LoadFromFile(ExtractFilePath(Application.ExeName)+'Classe'+inttostr(Classe)+'.jpg');
   except
@@ -72,18 +103,15 @@ end;
 *  Retorno: Valor inteiro correspondente ao neurônio ativado na saída   *
 *                                                                       *
 ************************************************************************}
-function TFrmClassifica.Classifica(Amostra: String):Integer;
+function TFrmClassifica.Classifica(Amostra: Tarray<Real>):Integer;
 var
   I: Integer;
-  AmostraStr,PesoStr : Tarray<string>;
-  AmostraFlt,PesoFlt : Tarray<real>;
+  PesoStr : Tarray<string>;
+  PesoFlt : Tarray<real>;
   J: Integer;
   OutPuts : array of Tarray<real>;
   k: Integer;
 begin
-  Amostra := '1;' + Amostra;
-  AmostraStr := Amostra.Split([';']);
-  AmostraFlt := StrArrayToFloatArray(AmostraStr);
   SetLength(OutPuts,NumCamadas);
   for I := 0 to pred(NumCamadas) do
   begin
@@ -94,7 +122,7 @@ begin
       PesoStr := Pesos[I][J-1].Split([';']);
       PesoFlt := StrArrayToFloatArray(PesoStr);
       if I = 0 then
-        OutPuts[I][J] := LogSig(MultiplicaArray(AmostraFlt,PesoFlt))
+        OutPuts[I][J] := LogSig(MultiplicaArray(Amostra,PesoFlt))
       else
         OutPuts[I][J] := LogSig(MultiplicaArray(OutPuts[I-1],PesoFlt))
     end;
@@ -132,17 +160,19 @@ var
   PesoCamada:String;
   I: Integer;
 begin
-  Rede := Arquivo.ReadString('REDE','Camadas','');
-  Camadas := Rede.Split([',']);
+  Rede          := Arquivo.ReadString('REDE','Camadas','');
+  MediaDados    := StrToFloat(Arquivo.ReadString('DADOS_TREINAMENTO','Media','0'));
+  DesvioPadrao  := StrToFloat(Arquivo.ReadString('DADOS_TREINAMENTO','Desvio','1'));
+  Camadas       := Rede.Split([',']);
   NivelAtivacao := StrToFloat(Arquivo.ReadString('REDE','NivelAtivacao',''));
-  NumCamadas := Length(Camadas);
+  NumCamadas    := Length(Camadas);
   lblNumCamadas.Caption := IntToStr(NumCamadas);
   LblNeucamadas.Caption := Rede;
   SetLength(Pesos,NumCamadas);
   for I := 0 to Pred(NumCamadas) do
   begin
-    PesoCamada := Arquivo.ReadString('CAMADA'+ IntToStr(I+1),'Pesos','');
-    Pesos[I] := PesoCamada.Split(['|']);
+    PesoCamada  := Arquivo.ReadString('CAMADA'+ IntToStr(I+1),'Pesos','');
+    Pesos[I]    := PesoCamada.Split(['|']);
   end;
 end;
 {************************************************************************
@@ -185,6 +215,32 @@ begin
   begin
     raise Exception.Create('Vetores incompatíveis');
   end;
+end;
+{************************************************************************
+*                                                                       *
+*  Função Normaliza                                                     *
+*  Normaliza os valores de um vetor de acordo com a média               *
+*  e desvio padrão dos dados de treinamento da rede                     *
+*  Dados: Vetor a ser normalizado                                       *
+*  Retorno: Vetor de Float                                              *
+*                                                                       *
+************************************************************************}
+
+function TFrmClassifica.Normaliza(Dados: Tarray<real>; Media,
+  Desvio: Real): Tarray<real>;
+var
+  i: Integer;
+begin
+  if Desvio = 0 then
+  begin
+    raise Exception.Create('Desvio padrão inválido');
+    exit;
+  end;
+  for i := 0 to pred(Length(Dados)) do
+  begin
+    Dados[i] := Abs((Dados[i] - Media)/Desvio);
+  end;
+  Result := Dados;
 end;
 
 procedure TFrmClassifica.SpeedButton1Click(Sender: TObject);

@@ -1,0 +1,180 @@
+# depslib dependency file v1.0
+1537906053 source:e:\oscar\tcc\arduino\src\colorsensor.cpp
+	<Arduino.h>
+	"ColorSensor.h"
+
+1506951446 f:\codeblocks\arduino\hardware\arduino\cores\arduino\arduino.h
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+	<math.h>
+	<avr/pgmspace.h>
+	<avr/io.h>
+	<avr/interrupt.h>
+	"binary.h"
+	"WCharacter.h"
+	"WString.h"
+	"HardwareSerial.h"
+	"USBAPI.h"
+	"pins_arduino.h"
+
+1506951446 f:\codeblocks\arduino\hardware\arduino\cores\arduino\binary.h
+
+1506951446 f:\codeblocks\arduino\hardware\arduino\cores\arduino\wcharacter.h
+	<ctype.h>
+
+1506951446 f:\codeblocks\arduino\hardware\arduino\cores\arduino\wstring.h
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<avr/pgmspace.h>
+
+1506951446 f:\codeblocks\arduino\hardware\arduino\cores\arduino\hardwareserial.h
+	<inttypes.h>
+	"Stream.h"
+
+1506951446 f:\codeblocks\arduino\hardware\arduino\cores\arduino\stream.h
+	<inttypes.h>
+	"Print.h"
+
+1506951446 f:\codeblocks\arduino\hardware\arduino\cores\arduino\print.h
+	<inttypes.h>
+	<stdio.h>
+	"WString.h"
+	"Printable.h"
+
+1506951446 f:\codeblocks\arduino\hardware\arduino\cores\arduino\printable.h
+	<stdlib.h>
+
+1506951446 f:\codeblocks\arduino\hardware\arduino\cores\arduino\usbapi.h
+	<inttypes.h>
+	<avr/pgmspace.h>
+	<avr/eeprom.h>
+	<avr/interrupt.h>
+	<util/delay.h>
+	"Arduino.h"
+	"USBDesc.h"
+	"USBCore.h"
+
+1506951446 f:\codeblocks\arduino\hardware\arduino\cores\arduino\usbdesc.h
+
+1506951446 f:\codeblocks\arduino\hardware\arduino\cores\arduino\usbcore.h
+	"USBAPI.h"
+
+1506951448 f:\codeblocks\arduino\hardware\arduino\variants\mega\pins_arduino.h
+	<avr/pgmspace.h>
+
+1536084560 e:\oscar\tcc\arduino\include\colorsensor.h
+
+1536179642 source:e:\oscar\tcc\arduino\src\motor.cpp
+	<Arduino.h>
+	"Motor.h"
+
+1536179864 e:\oscar\tcc\arduino\include\motor.h
+
+1537907501 source:e:\oscar\tcc\arduino\tcc.ino
+	<Arduino.h>
+	<SPI.h>
+	<SD.h>
+	"ColorSensor.h"
+	"Motor.h"
+
+1539349628 source:c:\users\oscar\documents\tcc\arduino\src\colorsensor.cpp
+	<Arduino.h>
+	"ColorSensor.h"
+
+1506951446 c:\codeblocks\arduino\hardware\arduino\cores\arduino\arduino.h
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+	<math.h>
+	<avr/pgmspace.h>
+	<avr/io.h>
+	<avr/interrupt.h>
+	"binary.h"
+	"WCharacter.h"
+	"WString.h"
+	"HardwareSerial.h"
+	"USBAPI.h"
+	"pins_arduino.h"
+
+1506951446 c:\codeblocks\arduino\hardware\arduino\cores\arduino\binary.h
+
+1506951446 c:\codeblocks\arduino\hardware\arduino\cores\arduino\wcharacter.h
+	<ctype.h>
+
+1506951446 c:\codeblocks\arduino\hardware\arduino\cores\arduino\wstring.h
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<avr/pgmspace.h>
+
+1506951446 c:\codeblocks\arduino\hardware\arduino\cores\arduino\hardwareserial.h
+	<inttypes.h>
+	"Stream.h"
+
+1506951446 c:\codeblocks\arduino\hardware\arduino\cores\arduino\stream.h
+	<inttypes.h>
+	"Print.h"
+
+1506951446 c:\codeblocks\arduino\hardware\arduino\cores\arduino\print.h
+	<inttypes.h>
+	<stdio.h>
+	"WString.h"
+	"Printable.h"
+
+1506951446 c:\codeblocks\arduino\hardware\arduino\cores\arduino\printable.h
+	<stdlib.h>
+
+1506951446 c:\codeblocks\arduino\hardware\arduino\cores\arduino\usbapi.h
+	<inttypes.h>
+	<avr/pgmspace.h>
+	<avr/eeprom.h>
+	<avr/interrupt.h>
+	<util/delay.h>
+	"Arduino.h"
+	"USBDesc.h"
+	"USBCore.h"
+
+1506951446 c:\codeblocks\arduino\hardware\arduino\cores\arduino\usbdesc.h
+
+1506951446 c:\codeblocks\arduino\hardware\arduino\cores\arduino\usbcore.h
+	"USBAPI.h"
+
+1506951448 c:\codeblocks\arduino\hardware\arduino\variants\mega\pins_arduino.h
+	<avr/pgmspace.h>
+
+1539349628 c:\users\oscar\documents\tcc\arduino\include\colorsensor.h
+
+1539349628 source:c:\users\oscar\documents\tcc\arduino\src\motor.cpp
+	<Arduino.h>
+	"Motor.h"
+
+1539349628 c:\users\oscar\documents\tcc\arduino\include\motor.h
+
+1539366112 source:c:\users\oscar\documents\tcc\arduino\tcc.ino
+	<Arduino.h>
+	<SPI.h>
+	<SD.h>
+	"ColorSensor.h"
+	"Motor.h"
+
+1539978298 source:c:\users\oscar\documents\tcc\arduino -classificador\src\colorsensor.cpp
+	<Arduino.h>
+	"ColorSensor.h"
+
+1539978298 c:\users\oscar\documents\tcc\arduino -classificador\include\colorsensor.h
+
+1539978298 source:c:\users\oscar\documents\tcc\arduino -classificador\src\motor.cpp
+	<Arduino.h>
+	"Motor.h"
+
+1539978298 c:\users\oscar\documents\tcc\arduino -classificador\include\motor.h
+
+1539980504 source:c:\users\oscar\documents\tcc\arduino -classificador\tcc.ino
+	<Arduino.h>
+	<SPI.h>
+	<SD.h>
+	"ColorSensor.h"
+	"Motor.h"
+
