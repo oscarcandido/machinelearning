@@ -13,14 +13,14 @@ clc;
 
 %% Dados treinamento
 
-Data = csvread('DADOS_COMPLETOS.csv');      %Dados dos exemplos
+Data = csvread('dados.csv');      %Dados dos exemplos
 X = Data(:,1:4);                    %entradas
 X = horzcat(ones(size(X,1),1),X);   %adiciona bias às entradas
 D = Data(:,5:10);                    %alvos
 
 %% Dados validação
 
-Datav = csvread('DADOS_COMPLETOS.csv');     
+Datav = csvread('dados.csv');     
 Xv = Datav(:,1:4);                    
 Xv = horzcat(ones(size(Xv,1),1),Xv); 
 Dv = Datav(:,5:10); 
@@ -28,8 +28,8 @@ Dv = Datav(:,5:10);
 %% Parâmetros da Rede
 
 Net = [14 6];
-LrnRte = 0.1;
-MinErr = 10e-10;
+LrnRte = 1;
+MinErr = 10e-8;
 MaxIt  = 50000;
 
 %% treinamento da rede
